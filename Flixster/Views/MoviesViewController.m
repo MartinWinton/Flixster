@@ -12,10 +12,13 @@
 #import "SVProgressHUD.h"
 
 
-@interface MoviesViewController () <UITableViewDataSource, UITableViewDelegate>
+@interface MoviesViewController () <UITableViewDataSource, UITableViewDelegate,UISearchBarDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 
 @property (nonatomic,strong) NSArray *movies;
+@property (strong, nonatomic) NSArray *filteredMovies;
+
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
 
 
@@ -30,6 +33,8 @@
     
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
+    self.searchBar.delegate = self;
+
     
     [SVProgressHUD showWithStatus:@"Loading Movies..."];
     UIColor *borderColor =  [UIColor blueColor];
@@ -106,6 +111,7 @@
             NSLog(@"%@", dataDictionary);
             
             self.movies = dataDictionary[@"results"];
+            self.filteredMovies = self.movies;
             
             [self.tableView reloadData];
             
@@ -127,7 +133,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return self.movies.count;
+    return self.filteredMovies.count;
     
 }
 
@@ -138,7 +144,7 @@
     
     MovieCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MovieCell"];
     
-    NSDictionary *movie = self.movies[indexPath.row];
+    NSDictionary *movie = self.filteredMovies[indexPath.row];
 
     
     cell.titleLabel.text = movie[@"title"];
@@ -173,7 +179,7 @@
     UITableViewCell *tappedCell = sender;
     NSIndexPath *indexPath = [self.tableView indexPathForCell:tappedCell];
     
-    NSDictionary *movie = self.movies[indexPath.row];
+    NSDictionary *movie = self.filteredMovies[indexPath.row];
     DetailViewController *detailsViewController =  [segue destinationViewController];
     
     detailsViewController.movie = movie;
@@ -181,6 +187,30 @@
     
     
 }
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
+    
+    if (searchText.length != 0) {
+        
+        NSPredicate *predicate = [NSPredicate predicateWithBlock:^BOOL(NSDictionary *evaluatedObject, NSDictionary *bindings) {
+            
+            NSString *title = evaluatedObject[@"title"];
+            NSLog(title);
+            return [title containsString:searchText];
+        }];
+        self.filteredMovies = [self.movies filteredArrayUsingPredicate:predicate];
+        
+        NSLog(@"%@", self.filteredMovies);
+        
+    }
+    else {
+        self.filteredMovies = self.movies;
+    }
+    
+    [self.tableView reloadData];
+    
+}
+
 
 
 @end
