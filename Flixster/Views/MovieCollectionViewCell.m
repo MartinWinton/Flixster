@@ -10,4 +10,21 @@
 
 @implementation MovieCollectionViewCell
 
+- (void)makeDark{
+    [UIView animateWithDuration:.5f animations:^{
+        self.gridImage.alpha = .5;
+    }];
+
+}
+
+- (void)reset{
+    
+    [UIView animateWithDuration:0.5f animations:^{
+        self.gridImage.alpha = 1;
+    }];
+
+}
+
+
 @end
+

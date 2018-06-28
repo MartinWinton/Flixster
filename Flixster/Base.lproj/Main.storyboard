@@ -77,7 +77,6 @@
         <!--Tab Bar Controller-->
         <scene sceneID="eNB-s0-lBj">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="wv5-Ns-phz" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tabBarController id="57Q-OI-cL7" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="hwW-dp-vXy">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
@@ -89,6 +88,7 @@
                         <segue destination="TcG-pa-z7k" kind="relationship" relationship="viewControllers" id="T3E-n3-8i8"/>
                     </connections>
                 </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wv5-Ns-phz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="609" y="-967"/>
         </scene>
@@ -165,12 +165,11 @@
             </objects>
             <point key="canvasLocation" x="104.8" y="33.733133433283363"/>
         </scene>
-        <!--Female Lead-->
+        <!--Classics-->
         <scene sceneID="kSr-p1-lLF">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="yhI-xH-hlf" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController id="TcG-pa-z7k" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Female Lead" image="superhero_tabbar_item" id="sUO-Jy-aa1"/>
+                    <tabBarItem key="tabBarItem" title="Classics" image="ticket_tabbar_icon" id="sUO-Jy-aa1"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="x7U-zq-q5i">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -179,6 +178,7 @@
                         <segue destination="Oxv-L7-7my" kind="relationship" relationship="rootViewController" id="Ufl-7l-fIV"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="yhI-xH-hlf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1116" y="34"/>
         </scene>
@@ -216,6 +216,7 @@
                                         </view>
                                         <connections>
                                             <outlet property="gridImage" destination="HNg-AU-iGd" id="fWS-P3-WyL"/>
+                                            <segue destination="dGG-bC-fLN" kind="show" id="iyc-ZM-Mn0"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -231,11 +232,14 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wcH-kT-NQv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1116" y="841.52923538230891"/>
+            <point key="canvasLocation" x="1182" y="912"/>
         </scene>
     </scenes>
     <resources>
         <image name="now_playing_tabbar_item" width="21" height="21"/>
-        <image name="superhero_tabbar_item" width="21" height="23"/>
+        <image name="ticket_tabbar_icon" width="25" height="25"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="7fg-Bh-amh"/>
+    </inferredMetricsTieBreakers>
 </document>

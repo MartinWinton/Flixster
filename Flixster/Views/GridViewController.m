@@ -5,7 +5,7 @@
 //  Created by Martin Winton on 6/28/18.
 //  Copyright © 2018 Martin Winton. All rights reserved.
 //
-
+#import "DetailViewController.h"
 #import "GridViewController.h"
 #import "MovieCollectionViewCell.h"
 #import "UIImageView+AFNetWorking.h"
@@ -70,7 +70,7 @@
 
 - (void) getMovies {
     
-    NSURL *url = [NSURL URLWithString:@"https://api.themoviedb.org/3/movie/now_playing?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed"];
+    NSURL *url = [NSURL URLWithString:@"https://api.themoviedb.org/3/movie/2000/recommendations?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed"];
     NSURLRequest *request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:10.0];
     NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
     NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
@@ -136,15 +136,34 @@
     [task resume];
 }
 
-/*
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    
+    
+    
+    MovieCollectionViewCell *tappedCell = sender;
+    
+
+
+    
+    
+    NSIndexPath *indexPath = [self.movieGridView indexPathForCell:tappedCell];
+    
+    NSDictionary *movie = self.movies[indexPath.row];
+    DetailViewController *detailsViewController =  [segue destinationViewController];
+    
+    detailsViewController.movie = movie;
+    
+ 
+    
 }
-*/
+
+
 
 - (UICollectionViewCell *)collectionView:(nonnull UICollectionView *)collectionView cellForItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
     
@@ -169,6 +188,14 @@
     
 
     
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    MovieCollectionViewCell *cell = (MovieCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
+    [cell makeDark];
+    [cell reset];
+
+
 }
 
 - (NSInteger)collectionView:(nonnull UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {

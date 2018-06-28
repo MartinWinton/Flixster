@@ -9,6 +9,14 @@
 #import <UIKit/UIKit.h>
 
 @interface MovieCollectionViewCell : UICollectionViewCell
+
+- (void)makeDark;
+- (void)reset;
+
+
+
+
+
 @property (weak, nonatomic) IBOutlet UIImageView *gridImage;
 
 @end
