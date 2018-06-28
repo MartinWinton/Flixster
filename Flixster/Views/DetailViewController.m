@@ -12,8 +12,9 @@
 @interface DetailViewController ()
 @property (weak, nonatomic) IBOutlet UIImageView *posterView;
 @property (weak, nonatomic) IBOutlet UIImageView *backdropImage;
-@property (weak, nonatomic) IBOutlet UILabel *synopsisLabel;
+
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UITextView *synopsisLabel;
 
 @end
 
