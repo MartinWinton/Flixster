@@ -1,40 +1,38 @@
 //
-//  MoviesViewController.m
+//  GridViewController.m
 //  Flixster
 //
-//  Created by Martin Winton on 6/27/18.
+//  Created by Martin Winton on 6/28/18.
 //  Copyright © 2018 Martin Winton. All rights reserved.
 //
-#import "DetailViewController.h"
-#import "MoviesViewController.h"
-#import "MovieCell.h"
+
+#import "GridViewController.h"
+#import "MovieCollectionViewCell.h"
 #import "UIImageView+AFNetWorking.h"
 #import "SVProgressHUD.h"
 
-
-@interface MoviesViewController () <UITableViewDataSource, UITableViewDelegate>
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
-
+@interface GridViewController () <UICollectionViewDataSource, UICollectionViewDelegate>
 @property (nonatomic,strong) NSArray *movies;
+
+@property (weak, nonatomic) IBOutlet UICollectionView *movieGridView;
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
 
 
 @end
 
-@implementation MoviesViewController
+@implementation GridViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.movieGridView.dataSource = self;
+    self.movieGridView.delegate = self;
     // Do any additional setup after loading the view.
     
-    
-    self.tableView.dataSource = self;
-    self.tableView.delegate = self;
-    
-    [SVProgressHUD showWithStatus:@"Loading Movies..."];
+    [SVProgressHUD showWithStatus:@"Loading Grid Movies..."];
     UIColor *borderColor =  [UIColor blueColor];
     [SVProgressHUD setForegroundColor:borderColor ];
-
+    
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         [self getMovies];
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -42,19 +40,33 @@
         });
     });
     
+    UICollectionViewFlowLayout *layout =  (UICollectionViewFlowLayout*) self.movieGridView.collectionViewLayout;
+    
+    layout.minimumLineSpacing = 5;
+    layout.minimumInteritemSpacing = 5;
+    
+    CGFloat postersPerLine = 2;
+    
+    CGFloat itemWidth = (self.movieGridView.frame.size.width- layout.minimumInteritemSpacing * (postersPerLine-1))/postersPerLine;
+    
+    CGFloat itemHeight = itemWidth * 1.6;
+    
+    
+    layout.itemSize = CGSizeMake(itemWidth, itemHeight);
     
     self.refreshControl = [[UIRefreshControl alloc]init];
     
     [ self.refreshControl addTarget:self action:@selector(getMovies) forControlEvents:UIControlEventValueChanged];
     
-    [self.tableView insertSubview:self.refreshControl atIndex:0];
+    [self.movieGridView insertSubview:self.refreshControl atIndex:0];
     
     
- 
 }
 
-
-
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
 
 - (void) getMovies {
     
@@ -65,7 +77,7 @@
         if (error != nil) {
             
             [SVProgressHUD dismiss];
-
+            
             NSLog(@"%@", [error localizedDescription]);
             
             UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error Loading Movies"
@@ -87,15 +99,15 @@
                                                                              
                                                                          });
                                                                      });
-
                                                                      
                                                                      
-                                                                    
+                                                                     
+                                                                     
                                                                  }];
             // add the cancel action to the alertController
             [alert addAction:cancelAction];
             
-         
+            
             [self presentViewController:alert animated:YES completion:^{
                 // optional code for what happens after the alert controller has finished presenting
             }];
@@ -107,42 +119,39 @@
             
             self.movies = dataDictionary[@"results"];
             
-            [self.tableView reloadData];
-            
-            [SVProgressHUD dismiss];
+            [self.movieGridView reloadData];
 
             
             
-           
+            [SVProgressHUD dismiss];
+            
+            
+            
+            
         }
-        
         [self.refreshControl endRefreshing];
+
+        
     }];
     [task resume];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
 }
+*/
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return self.movies.count;
+- (UICollectionViewCell *)collectionView:(nonnull UICollectionView *)collectionView cellForItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
     
-}
+    MovieCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"gridcell" forIndexPath:indexPath];
+    
+    NSDictionary *movie = self.movies[indexPath.item];
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    
-    
-    
-    MovieCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MovieCell"];
-    
-    NSDictionary *movie = self.movies[indexPath.row];
-
-    
-    cell.titleLabel.text = movie[@"title"];
-    cell.descriptionLabel.text = movie[@"overview"];
     
     NSString *baseURLString = @"https://image.tmdb.org/t/p/w500";
     
@@ -152,34 +161,20 @@
     NSString *finalString = [baseURLString stringByAppendingString:posterURLString];
     
     NSURL *posterURL = [NSURL URLWithString:finalString];
+    cell.gridImage.image= nil;
     
-    
-    cell.movieImage.image= nil;
-    
-    [cell.movieImage setImageWithURL:posterURL];
-  
-   
+    [cell.gridImage setImageWithURL:posterURL];
     
     return cell;
+    
+
+    
 }
 
+- (NSInteger)collectionView:(nonnull UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    
+    return self.movies.count;
 
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-    UITableViewCell *tappedCell = sender;
-    NSIndexPath *indexPath = [self.tableView indexPathForCell:tappedCell];
-    
-    NSDictionary *movie = self.movies[indexPath.row];
-    DetailViewController *detailsViewController =  [segue destinationViewController];
-    
-    detailsViewController.movie = movie;
-    
-    
-    
 }
 
 
