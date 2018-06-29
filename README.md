@@ -17,13 +17,13 @@ The following **required** functionality is complete:
 The following **optional** features are implemented:
 
 - [x] User sees an error message when there's a networking error.
-- [x] Movies are displayed using a CollectionView instead of a TableView.
+- [x] Movies are displayed using a CollectionView along with a TableView.
 - [x] User can search for a movie.
 - [x] All images fade in as they are loading.
 - [x] User can view the large movie poster by tapping on a cell.
 - [x] For the large poster, load the low resolution image first and then switch to the high resolution image when complete.
 - [x] Customize the selection effect of the cell. (CellGrid has alpha fade animation)
-- [ ] Customize the navigation bar.
+- [x] Customize the navigation bar.
 - [x] Customize the UI.
 
 The following **additional** features are implemented:
@@ -32,7 +32,9 @@ The following **additional** features are implemented:
 - [x] Searchbar has a cancel button that removes text entry and updates table 
 - [x] Second Tab has Classics, featuring reccomendations based on old movie
 - [x] When clicking on the poster in details, users can watch the first trailer in the database
-- [x] If no trailers are found, an error is given
+- [x] Users can return to detail view after trailer with custom Segue
+- [x] If no trailers are found, an error is given and users can return to home
+
 
 
 
