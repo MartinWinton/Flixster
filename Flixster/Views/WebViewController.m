@@ -27,9 +27,9 @@
     NSNumber *number = self.movie[@"id"];
     self.movieID = [number stringValue];
     
+    
+    
     [SVProgressHUD showWithStatus:@"Loading Trailer..."];
-    UIColor *borderColor =  [UIColor greenColor];
-    [SVProgressHUD setForegroundColor:borderColor ];
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         [self getVideo];

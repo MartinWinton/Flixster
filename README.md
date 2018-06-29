@@ -35,6 +35,9 @@ The following **additional** features are implemented:
 - [x] Users can return to detail view after trailer with custom Segue
 - [x] If no trailers are found, an error is given and users can return to home
 - [x] Search includes title and overview, both case insensitive
+- [x] Users can see date of release on details view
+- [x] Users can see rating system that includes number of ratings from database and a face based on the rating (thresholds are [0,4), [4,6], (6,10])
+- [x] Search Bar works for both colleciton view and search view
 
 
 
