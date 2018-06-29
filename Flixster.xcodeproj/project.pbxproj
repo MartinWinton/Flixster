@@ -17,6 +17,9 @@
 		0638E0D720E40FC900A9C06C /* MoviesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0638E0D620E40FC900A9C06C /* MoviesViewController.m */; };
 		0638E0DD20E4526700A9C06C /* MovieCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0638E0DC20E4526700A9C06C /* MovieCell.m */; };
 		0638E0E020E4605500A9C06C /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0638E0DF20E4605500A9C06C /* DetailViewController.m */; };
+		06C89A0520E5A13600360A79 /* error.png in Resources */ = {isa = PBXBuildFile; fileRef = 06C89A0420E5A13500360A79 /* error.png */; };
+		06C89A0820E5A67100360A79 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 06C89A0720E5A67100360A79 /* WebViewController.m */; };
+		06C89A0A20E5A96500360A79 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06C89A0920E5A96500360A79 /* WebKit.framework */; };
 		06FF81E120E5611700AE0DD3 /* GridViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 06FF81E020E5611700AE0DD3 /* GridViewController.m */; };
 		06FF81E420E563E200AE0DD3 /* MovieCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 06FF81E320E563E200AE0DD3 /* MovieCollectionViewCell.m */; };
 		551108E017DDDB86B23623C8 /* libPods-FlixsterTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FD5B338B6F084DC686E25475 /* libPods-FlixsterTests.a */; };
@@ -62,6 +65,10 @@
 		0638E0DC20E4526700A9C06C /* MovieCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MovieCell.m; sourceTree = "<group>"; };
 		0638E0DE20E4605500A9C06C /* DetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
 		0638E0DF20E4605500A9C06C /* DetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
+		06C89A0420E5A13500360A79 /* error.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = error.png; sourceTree = "<group>"; };
+		06C89A0620E5A67100360A79 /* WebViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
+		06C89A0720E5A67100360A79 /* WebViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
+		06C89A0920E5A96500360A79 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		06FF81DF20E5611700AE0DD3 /* GridViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GridViewController.h; sourceTree = "<group>"; };
 		06FF81E020E5611700AE0DD3 /* GridViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GridViewController.m; sourceTree = "<group>"; };
 		06FF81E220E563E200AE0DD3 /* MovieCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MovieCollectionViewCell.h; sourceTree = "<group>"; };
@@ -82,6 +89,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				06C89A0A20E5A96500360A79 /* WebKit.framework in Frameworks */,
 				CC690A5D27DAB2AC4946FC1D /* libPods-Flixster.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -108,6 +116,7 @@
 		0638E09720E409DF00A9C06C = {
 			isa = PBXGroup;
 			children = (
+				06C89A0420E5A13500360A79 /* error.png */,
 				0638E0A220E409DF00A9C06C /* Flixster */,
 				0638E0BB20E409E100A9C06C /* FlixsterTests */,
 				0638E0C620E409E100A9C06C /* FlixsterUITests */,
@@ -182,6 +191,8 @@
 				06FF81E020E5611700AE0DD3 /* GridViewController.m */,
 				06FF81E220E563E200AE0DD3 /* MovieCollectionViewCell.h */,
 				06FF81E320E563E200AE0DD3 /* MovieCollectionViewCell.m */,
+				06C89A0620E5A67100360A79 /* WebViewController.h */,
+				06C89A0720E5A67100360A79 /* WebViewController.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -209,6 +220,7 @@
 		546A7FF4797838A23B05ABA9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				06C89A0920E5A96500360A79 /* WebKit.framework */,
 				95D5E53479FA243CE92E388F /* libPods-Flixster.a */,
 				FD5B338B6F084DC686E25475 /* libPods-FlixsterTests.a */,
 				F967E007226ACE72591148E8 /* libPods-FlixsterUITests.a */,
@@ -325,6 +337,7 @@
 			files = (
 				0638E0B020E409E100A9C06C /* LaunchScreen.storyboard in Resources */,
 				0638E0AD20E409E100A9C06C /* Assets.xcassets in Resources */,
+				06C89A0520E5A13600360A79 /* error.png in Resources */,
 				0638E0AB20E409DF00A9C06C /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -428,6 +441,7 @@
 				0638E0E020E4605500A9C06C /* DetailViewController.m in Sources */,
 				0638E0B320E409E100A9C06C /* main.m in Sources */,
 				0638E0A520E409DF00A9C06C /* AppDelegate.m in Sources */,
+				06C89A0820E5A67100360A79 /* WebViewController.m in Sources */,
 				0638E0DD20E4526700A9C06C /* MovieCell.m in Sources */,
 				06FF81E120E5611700AE0DD3 /* GridViewController.m in Sources */,
 				0638E0D720E40FC900A9C06C /* MoviesViewController.m in Sources */,

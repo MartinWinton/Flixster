@@ -8,6 +8,8 @@
 
 #import "DetailViewController.h"
 #import "UIIMageView+AFNetworking.h"
+#import "WebViewController.h"
+
 
 @interface DetailViewController ()
 @property (weak, nonatomic) IBOutlet UIImageView *posterView;
@@ -95,6 +97,9 @@
     
     NSURLRequest *smallBackdropRequest = [NSURLRequest requestWithURL:smallBackdropURL];
     
+    UIImage * myImage = [UIImage imageNamed: @"error.png"];
+    self.backdropImage.image = myImage;
+    
     
     
     
@@ -129,6 +134,8 @@
                                    failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
                                        // do something for the failure condition
                                        // possibly try to get the large image
+                                       
+                             
                                    }];
 
     
@@ -147,14 +154,18 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    
+    WebViewController *detailsViewController =  [segue destinationViewController];
+    NSNumber *number = self.movie[@"id"];
+    detailsViewController.movieID = [number stringValue];
 }
-*/
+
 
 @end
