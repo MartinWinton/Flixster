@@ -122,6 +122,35 @@
             
             self.movies = dataDictionary[@"results"];
             self.filteredMovies = self.movies;
+            
+            if(self.searchBar.text.length > 0){
+                
+                NSPredicate *predicate = [NSPredicate predicateWithBlock:^BOOL(NSDictionary *evaluatedObject, NSDictionary *bindings) {
+                    
+                    NSString *title = evaluatedObject[@"title"];
+                    NSString *description = evaluatedObject[@"overview"];
+                    
+                    
+                    
+                    NSString *lowerTitle = [title lowercaseString];
+                    NSString *lowerDescription = [description lowercaseString];
+                    
+                    
+                    
+                    
+                    
+                    return [lowerTitle containsString:[self.searchBar.text lowercaseString]] ||   [lowerDescription containsString:[self.searchBar.text lowercaseString]];
+                    
+                    
+                }];
+                self.filteredMovies = [self.movies filteredArrayUsingPredicate:predicate];
+                
+                NSLog(@"%@", self.filteredMovies);
+                
+                
+            }
+            
+            
 
             
             [self.movieGridView reloadData];

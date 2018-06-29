@@ -182,6 +182,17 @@
     
     MovieCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MovieCell"];
     
+    UIView *backgroundView = [[UIView alloc] init];
+    UIColor *dark = [UIColor colorWithRed:60.0f/255.0f
+                                green:60.0f/255.0f
+                                 blue:60.0f/255.0f
+                                alpha:1.0f];
+    backgroundView.backgroundColor = dark;
+    cell.selectedBackgroundView = backgroundView;
+
+    
+
+    
     NSDictionary *movie = self.filteredMovies[indexPath.row];
 
     
