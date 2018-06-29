@@ -17,7 +17,10 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UITextView *synopsisLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *raitingImage;
+@property (weak, nonatomic) IBOutlet UILabel *numRatings;
 
+@property (weak, nonatomic) IBOutlet UILabel *dateLabel;
 @end
 
 @implementation DetailViewController
@@ -141,8 +144,55 @@
     
     self.titleLabel.text = self.movie[@"title"];
     self.synopsisLabel.text = self.movie[@"overview"];
+    self.dateLabel.text = self.movie[@"release_date"];
     
-    [self.titleLabel sizeToFit];
+    
+    
+    NSString *ratings = [self.movie[@"vote_count"] stringValue];
+    
+    
+    
+    ratings = [@"(" stringByAppendingString:ratings];
+    ratings = [ratings stringByAppendingString:@")"];
+    
+    self.numRatings.text = ratings;
+
+    
+
+    
+    NSNumber *number = self.movie[@"vote_average"];
+    NSNumber *mediumbot = [NSNumber numberWithInteger:4];
+    NSNumber *mediumtop = [NSNumber numberWithInteger:6];
+
+
+
+    
+    if([number doubleValue] > [mediumtop doubleValue]){
+        
+        UIImage * good = [UIImage imageNamed: @"smiley1.png"];
+
+        self.raitingImage.image = good;
+    }
+    
+   else if([number doubleValue] < [mediumbot doubleValue]){
+        
+        UIImage * bad = [UIImage imageNamed: @"smiley2.png"];
+        
+        self.raitingImage.image = bad;
+    }
+    
+    else{
+        
+        UIImage * medium = [UIImage imageNamed: @"smiley3.png"];
+        
+        self.raitingImage.image = medium;
+        
+        
+    }
+
+
+    
+    
 
     
     

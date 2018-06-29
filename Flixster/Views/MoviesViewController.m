@@ -20,6 +20,7 @@
 @property (strong, nonatomic) NSArray *filteredMovies;
 
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
+@property (nonatomic, strong) UIColor *gold;
 
 
 @end
@@ -28,6 +29,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    
     // Do any additional setup after loading the view.
     
     
@@ -37,8 +40,13 @@
 
     
     [SVProgressHUD showWithStatus:@"Loading Movies..."];
-    UIColor *borderColor =  [UIColor blueColor];
-    [SVProgressHUD setForegroundColor:borderColor ];
+   // UIColor *borderColor =  [UIColor blueColor];
+    self.gold = [UIColor colorWithRed:255.0f/255.0f
+                    green:215.0f/255.0f
+                     blue:0.0f/255.0f
+                    alpha:1.0f];
+    [SVProgressHUD setForegroundColor:self.gold ];
+    [SVProgressHUD setBackgroundColor:[UIColor blackColor]];
 
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         [self getMovies];
@@ -80,10 +88,8 @@
                                                                    style:UIAlertActionStyleCancel
                                                                  handler:^(UIAlertAction * _Nonnull action) {
                                                                      
-                                                                     [SVProgressHUD showWithStatus:@"Retrying..."];
-                                                                     UIColor *borderColor =  [UIColor redColor];
-                                                                     [SVProgressHUD setForegroundColor:borderColor ];
-                                                                     
+                                                                     [SVProgressHUD setForegroundColor:self.gold ];
+                                                                     [SVProgressHUD setBackgroundColor:[UIColor blackColor]];
                                                                      dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                                                                          [self getMovies];
                                                                          dispatch_async(dispatch_get_main_queue(), ^{
@@ -140,15 +146,7 @@
     self.searchBar.showsCancelButton = YES;
 }
 
-- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
-    self.searchBar.showsCancelButton = NO;
-    self.searchBar.text = @"";
-    [self.searchBar resignFirstResponder];
-    
-    self.filteredMovies = self.movies;
-    [self.tableView reloadData];
 
-}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
@@ -223,6 +221,16 @@
     detailsViewController.movie = movie;
     
     
+    
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+    self.searchBar.showsCancelButton = NO;
+    self.searchBar.text = @"";
+    [self.searchBar resignFirstResponder];
+    
+    self.filteredMovies = self.movies;
+    [self.tableView reloadData];
     
 }
 

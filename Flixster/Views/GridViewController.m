@@ -11,11 +11,14 @@
 #import "UIImageView+AFNetWorking.h"
 #import "SVProgressHUD.h"
 
-@interface GridViewController () <UICollectionViewDataSource, UICollectionViewDelegate>
+@interface GridViewController () <UICollectionViewDataSource, UICollectionViewDelegate,UISearchBarDelegate>
 @property (nonatomic,strong) NSArray *movies;
+@property (strong, nonatomic) NSArray *filteredMovies;
+
 
 @property (weak, nonatomic) IBOutlet UICollectionView *movieGridView;
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
+@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 
 
 @end
@@ -27,11 +30,11 @@
     
     self.movieGridView.dataSource = self;
     self.movieGridView.delegate = self;
+    self.searchBar.delegate = self;
+
     // Do any additional setup after loading the view.
     
     [SVProgressHUD showWithStatus:@"Loading Classics..."];
-    UIColor *borderColor =  [UIColor blueColor];
-    [SVProgressHUD setForegroundColor:borderColor ];
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         [self getMovies];
@@ -118,8 +121,11 @@
             NSLog(@"%@", dataDictionary);
             
             self.movies = dataDictionary[@"results"];
+            self.filteredMovies = self.movies;
+
             
             [self.movieGridView reloadData];
+
 
             
             
@@ -154,7 +160,7 @@
     
     NSIndexPath *indexPath = [self.movieGridView indexPathForCell:tappedCell];
     
-    NSDictionary *movie = self.movies[indexPath.row];
+    NSDictionary *movie = self.filteredMovies[indexPath.row];
     DetailViewController *detailsViewController =  [segue destinationViewController];
     
     detailsViewController.movie = movie;
@@ -171,7 +177,7 @@
     
 
     
-    NSDictionary *movie = self.movies[indexPath.item];
+    NSDictionary *movie = self.filteredMovies[indexPath.item];
 
     
     NSString *baseURLString = @"https://image.tmdb.org/t/p/w500";
@@ -198,7 +204,7 @@
                                            weakSelf.gridImage.image = image;
                                            
                                            //Animate UIImageView back to alpha 1 over 0.3sec
-                                           [UIView animateWithDuration:0.3 animations:^{
+                                           [UIView animateWithDuration:0.5 animations:^{
                                                weakSelf.gridImage.alpha = 1.0;
                                            }];
                                        }
@@ -230,9 +236,60 @@
 
 - (NSInteger)collectionView:(nonnull UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     
-    return self.movies.count;
+    return self.filteredMovies.count;
 
 }
+
+- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
+    [[UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[UISearchBar class]]] setTintColor:[UIColor whiteColor]];
+    self.searchBar.showsCancelButton = YES;
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+    self.searchBar.showsCancelButton = NO;
+    self.searchBar.text = @"";
+    [self.searchBar resignFirstResponder];
+    
+    self.filteredMovies = self.movies;
+    [self.movieGridView reloadData];
+    
+}
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
+    
+    if (searchText.length != 0) {
+        
+        NSPredicate *predicate = [NSPredicate predicateWithBlock:^BOOL(NSDictionary *evaluatedObject, NSDictionary *bindings) {
+            
+            NSString *title = evaluatedObject[@"title"];
+            NSString *description = evaluatedObject[@"overview"];
+            
+            
+            
+            NSString *lowerTitle = [title lowercaseString];
+            NSString *lowerDescription = [description lowercaseString];
+            
+            
+            
+            
+            
+            return [lowerTitle containsString:[searchText lowercaseString]] ||   [lowerDescription containsString:[searchText lowercaseString]];
+            
+            
+        }];
+        self.filteredMovies = [self.movies filteredArrayUsingPredicate:predicate];
+        
+        NSLog(@"%@", self.filteredMovies);
+        
+    }
+    else {
+        self.filteredMovies = self.movies;
+    }
+    
+    [self.movieGridView reloadData];
+    
+}
+
 
 
 @end
