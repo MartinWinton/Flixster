@@ -136,6 +136,7 @@
 }
 
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
+    [[UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[UISearchBar class]]] setTintColor:[UIColor whiteColor]];
     self.searchBar.showsCancelButton = YES;
 }
 
@@ -232,7 +233,20 @@
         NSPredicate *predicate = [NSPredicate predicateWithBlock:^BOOL(NSDictionary *evaluatedObject, NSDictionary *bindings) {
             
             NSString *title = evaluatedObject[@"title"];
-            return [title containsString:searchText];
+            NSString *description = evaluatedObject[@"overview"];
+            
+            
+                
+            NSString *lowerTitle = [title lowercaseString];
+            NSString *lowerDescription = [description lowercaseString];
+
+                
+            
+
+
+            return [lowerTitle containsString:[searchText lowercaseString]] ||   [lowerDescription containsString:[searchText lowercaseString]];
+            
+            
         }];
         self.filteredMovies = [self.movies filteredArrayUsingPredicate:predicate];
         

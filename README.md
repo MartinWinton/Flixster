@@ -3,7 +3,7 @@
 
 **Name of your app** is a movies app using the [The Movie Database API](http://docs.themoviedb.apiary.io/#).
 
-Time spent: **X** hours spent in total
+Time spent: **8** hours spent in total
 
 ## User Stories
 
@@ -34,6 +34,7 @@ The following **additional** features are implemented:
 - [x] When clicking on the poster in details, users can watch the first trailer in the database
 - [x] Users can return to detail view after trailer with custom Segue
 - [x] If no trailers are found, an error is given and users can return to home
+- [x] Search includes title and overview, both case insensitive
 
 
 
