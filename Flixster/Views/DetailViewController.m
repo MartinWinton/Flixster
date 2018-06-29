@@ -162,9 +162,8 @@
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
     
-    WebViewController *detailsViewController =  [segue destinationViewController];
-    NSNumber *number = self.movie[@"id"];
-    detailsViewController.movieID = [number stringValue];
+    WebViewController *webViewController =  [segue destinationViewController];
+    webViewController.movie = self.movie;
 }
 
 

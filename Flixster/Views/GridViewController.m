@@ -29,7 +29,7 @@
     self.movieGridView.delegate = self;
     // Do any additional setup after loading the view.
     
-    [SVProgressHUD showWithStatus:@"Loading Grid Movies..."];
+    [SVProgressHUD showWithStatus:@"Loading Classics..."];
     UIColor *borderColor =  [UIColor blueColor];
     [SVProgressHUD setForegroundColor:borderColor ];
     
@@ -168,6 +168,8 @@
 - (UICollectionViewCell *)collectionView:(nonnull UICollectionView *)collectionView cellForItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
     
     MovieCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"gridcell" forIndexPath:indexPath];
+    
+
     
     NSDictionary *movie = self.movies[indexPath.item];
 

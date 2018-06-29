@@ -8,9 +8,12 @@
 
 #import "WebViewController.h"
 #import "SVProgressHUD.h"
+#import "DetailViewController.h"
 
 @interface WebViewController ()
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
+@property (weak, nonatomic) NSString  *movieID;
+
 
 
 
@@ -21,8 +24,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [SVProgressHUD showWithStatus:@"Loading Movies..."];
-    UIColor *borderColor =  [UIColor blueColor];
+    NSNumber *number = self.movie[@"id"];
+    self.movieID = [number stringValue];
+    
+    [SVProgressHUD showWithStatus:@"Loading Trailer..."];
+    UIColor *borderColor =  [UIColor greenColor];
     [SVProgressHUD setForegroundColor:borderColor ];
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -33,6 +39,7 @@
 
     
 }
+
 
 
 - (void) getVideo {
@@ -61,7 +68,7 @@
             
             NSLog(@"%@", [error localizedDescription]);
             
-            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error Loading Movies"
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error Loading Trailer"
                                                                            message:@"Check your internet connection and try again!"
                                                                     preferredStyle:(UIAlertControllerStyleAlert)];
             
@@ -96,28 +103,33 @@
             
             NSArray *results = dataDictionary[@"results"];
             
-            if(YES){
+            if([results count] < 1){
                 
                 
                 UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"No Trailers for this Movie"
-                                                                               message:@"Click to go back"
+                                                                               message:@"Return Home?"
                                                                         preferredStyle:(UIAlertControllerStyleAlert)];
                 
                 // create a cancel action
-                UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Go back"
+                UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Home"
                                                                        style:UIAlertActionStyleCancel
                                                                      handler:^(UIAlertAction * _Nonnull action) {
                                                                          
                                                                          dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                                                                          
                                                                      
 
                                                                              dispatch_async(dispatch_get_main_queue(), ^{
                                                                                  
+                                                                                 [self performSegueWithIdentifier:@"back" sender:self];
+
+                                                                            
+                                                                                 
                                                                                  
                                                                                  [SVProgressHUD dismiss];
                                                                                  
-                                                                                 [self.navigationController popToRootViewControllerAnimated:YES];
-
+                                                                                 
+                                                                              
                                                                                  
                                                                              });
                                                                          });
@@ -169,9 +181,11 @@
             // Load Request into WebView.
             [self.webView loadRequest:request];
             
-            [SVProgressHUD dismiss];
                 
             }
+            
+            [SVProgressHUD dismiss];
+
 
 
        
@@ -188,14 +202,7 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+
 
 @end

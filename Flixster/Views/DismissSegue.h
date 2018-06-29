@@ -1,5 +1,5 @@
 //
-//  WebViewController.h
+//  DismissSegue.h
 //  Flixster
 //
 //  Created by Martin Winton on 6/28/18.
@@ -8,9 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface WebViewController : UIViewController
-
-@property (nonatomic, strong) NSDictionary *movie;
-
+@interface DismissSegue : UIStoryboardSegue
 
 @end
