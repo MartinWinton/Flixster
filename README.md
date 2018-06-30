@@ -3,7 +3,7 @@
 
 **Name of your app** is a movies app using the [The Movie Database API](http://docs.themoviedb.apiary.io/#).
 
-Time spent: **8** hours spent in total
+Time spent: **18** hours spent in total
 
 ## User Stories
 
@@ -38,9 +38,7 @@ The following **additional** features are implemented:
 - [x] Users can see date of release on details view
 - [x] Users can see rating system that includes number of ratings from database and a face based on the rating (thresholds are [0,4), [4,6], (6,10])
 - [x] Search Bar works for both colleciton view and search view
-
-
-
+- [x] If user refresh with input still in search bar, entries still update relating to the search
 
 
 Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
@@ -72,7 +70,8 @@ GIFs created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Notes
 
-Describe any challenges encountered while building the app.
+- Parsing video link was difficult
+- Creating rating system was fun
 
 ## Credits
 
