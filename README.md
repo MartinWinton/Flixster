@@ -45,8 +45,8 @@ The following **additional** features are implemented:
 
 Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
 
-1.
-2.
+1. Different ways one would implement a ratings display system
+2. Different ways to allow users to return after Video View
 
 ## Video Walkthrough
 
@@ -60,7 +60,15 @@ Here's a walkthrough of user stories related to connection issues
 
 <img src='FlixsterMainInternetConnection.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
+Here's a walkthrough of an optional story where if no trailers exist for the movie, the user is able to return home
+
+<img src='FlixsterNoTrailers.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+
+
 GIFs created with [LiceCap](http://www.cockos.com/licecap/).
+
+
+
 
 ## Notes
 
@@ -68,13 +76,14 @@ Describe any challenges encountered while building the app.
 
 ## Credits
 
-List an 3rd party libraries, icons, graphics, or other assets you used in your app.
+List any 3rd party libraries, icons, graphics, or other assets you used in your app.
 
 - [AFNetworking](https://github.com/AFNetworking/AFNetworking) - networking task library
+- [SVProgressHUD](https://github.com/SVProgressHUD/SVProgressHUD) - progress HUD
 
 ## License
 
-Copyright [yyyy] [name of copyright owner]
+Copyright [2018] [Martin Winton]
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
