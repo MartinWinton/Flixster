@@ -34,6 +34,7 @@
     __weak DetailViewController *weakSelf = self;
 
     
+    /*
     NSString *baseURLString = @"https://image.tmdb.org/t/p/w500";
     
     NSString *posterURLString = self.movie[@"poster_path"];
@@ -41,8 +42,10 @@
     
     
     NSString *finalString = [baseURLString stringByAppendingString:posterURLString];
+     
+     */
     
-    NSURL *posterURL = [NSURL URLWithString:finalString];
+    NSURL *posterURL = self.movie.posterUrl;
     
     
     
@@ -74,10 +77,12 @@
                                        }];
     
 
-  
+    self.titleLabel.text = self.movie.title;
+    self.synopsisLabel.text = self.movie.overview;
+    //.self.dateLabel.text = self.movie[@"release_date"];
 
     
-    
+    /*
     
     
     
@@ -141,15 +146,13 @@
                              
                                    }];
 
+    */
     
-    self.titleLabel.text = self.movie[@"title"];
-    self.synopsisLabel.text = self.movie[@"overview"];
-    self.dateLabel.text = self.movie[@"release_date"];
+
     
-    
+    /*
     
     NSString *ratings = [self.movie[@"vote_count"] stringValue];
-    
     
     
     ratings = [@"(" stringByAppendingString:ratings];
@@ -157,7 +160,7 @@
     
     self.numRatings.text = ratings;
 
-    
+
 
     
     NSNumber *number = self.movie[@"vote_average"];
@@ -189,6 +192,8 @@
         
         
     }
+     
+     */
 
 
     

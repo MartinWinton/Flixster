@@ -10,13 +10,15 @@
 #import "MovieCell.h"
 #import "UIImageView+AFNetWorking.h"
 #import "SVProgressHUD.h"
+#import "Movie.h"
+#import "MovieAPIManager.h"
 
 
 @interface MoviesViewController () <UITableViewDataSource, UITableViewDelegate,UISearchBarDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 
-@property (nonatomic,strong) NSArray *movies;
+@property (nonatomic,strong) NSMutableArray *movies;
 @property (strong, nonatomic) NSArray *filteredMovies;
 
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
@@ -31,12 +33,16 @@
     [super viewDidLoad];
     
     
+    
+    
     // Do any additional setup after loading the view.
     
     
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     self.searchBar.delegate = self;
+    
+    
 
     
     [SVProgressHUD showWithStatus:@"Loading Movies..."];
@@ -60,6 +66,14 @@
     
     [self.tableView insertSubview:self.refreshControl atIndex:0];
     
+     
+     
+    
+    MovieAPIManager *manager = [MovieAPIManager new];
+    [manager fetchNowPlaying:^(NSArray *movies, NSError *error) {
+        self.filteredMovies = movies;
+        [self.tableView reloadData];
+    }];
     
  
 }
@@ -114,7 +128,11 @@
             
             NSLog(@"%@", dataDictionary);
             
-            self.movies = dataDictionary[@"results"];
+            NSArray *dictionaries = dataDictionary[@"results"];
+            
+            self.movies = [Movie moviesWithDictionaries:dictionaries];
+            
+            
             self.filteredMovies = self.movies;
             
             if(self.searchBar.text.length > 0){
@@ -193,20 +211,23 @@
     
 
     
-    NSDictionary *movie = self.filteredMovies[indexPath.row];
+    cell.movie = self.filteredMovies[indexPath.row];
 
+    /*
+    cell.titleLabel.text = movie.title;
+    cell.descriptionLabel.text = movie.overview;
     
-    cell.titleLabel.text = movie[@"title"];
-    cell.descriptionLabel.text = movie[@"overview"];
     
     NSString *baseURLString = @"https://image.tmdb.org/t/p/w500";
     
-    NSString *posterURLString = movie[@"poster_path"];
+    NSString *posterURLString = movie.posterUrl;
     
     
     NSString *finalString = [baseURLString stringByAppendingString:posterURLString];
     
-    NSURL *posterURL = [NSURL URLWithString:finalString];
+    NSURL *posterURL = movie.posterUrl;
+     
+     
     
     NSURLRequest *request = [NSURLRequest requestWithURL:posterURL];
     
@@ -235,6 +256,8 @@
                                         // do something for the failure condition
                                     }];
     
+     
+     */
 
     
   
@@ -253,7 +276,7 @@
     UITableViewCell *tappedCell = sender;
     NSIndexPath *indexPath = [self.tableView indexPathForCell:tappedCell];
     
-    NSDictionary *movie = self.filteredMovies[indexPath.row];
+    Movie *movie = self.filteredMovies[indexPath.row];
     DetailViewController *detailsViewController =  [segue destinationViewController];
     
     detailsViewController.movie = movie;
